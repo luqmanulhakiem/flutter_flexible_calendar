@@ -9,7 +9,7 @@ import 'flutter_slivergriddelegate.dart';
 
 class FlutterFlexibleCalendarView extends StatefulWidget {
   DateTime month;
-  DateTime currentMonth;
+  DateTime currentMonth = DateTime.now();
   bool disabledPreDay;
   bool showWeekendDay;
   bool showHeader;
@@ -45,7 +45,6 @@ class FlutterFlexibleCalendarView extends StatefulWidget {
   FlutterFlexibleCalendarView({
     super.key,
     required this.month,
-    required this.currentMonth,
     int? maxLimitYear,
     int? minLimitYear,
     List<String>? days,
@@ -78,6 +77,7 @@ class FlutterFlexibleCalendarView extends StatefulWidget {
     maxYear =
         maxLimitYear != null ? month.year + maxLimitYear : month.year + 10;
     minYear = minLimitYear != null ? month.year - minLimitYear : month.year - 2;
+    currentMonth = month;
   }
   static int setDefaultMonth({required int month}) {
     return (DateTime.now().month - 1 % 12) + month;
