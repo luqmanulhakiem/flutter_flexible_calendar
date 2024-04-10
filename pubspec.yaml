@@ -1,7 +1,7 @@
 name: flutter_flexible_calendar
-description: A starting point for Dart libraries or applications.
+description: flutter_flexible_calendar lib allow to create standard calendar and horizontal calendar, just listen callback both events.
 version: 1.0.0
-# repository: https://github.com/my_org/my_repo
+homepage: https://github.com/kdrtech/flutter_flexible_calendar
 
 environment:
   sdk: ^3.2.6
