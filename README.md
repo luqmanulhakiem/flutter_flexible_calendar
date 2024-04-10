@@ -35,32 +35,133 @@ Highly video, feature-packed flutter_flexible_calendar widget for Flutter.
 
 * Standar calendar user interface
 * Hotizontal calendar user interface 
-* Pull Up to reload new data.
-* Allow show refresh indicator
-* Change loading color
-* Change background loading color
-* Change refresh indicator Color
-
-* 
-
-TODO: List what your package can do. Maybe include images, gifs, or videos.
-
-## Getting started
-
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
+* Calendar header change month and year.
 
 ## Usage
 
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder. 
+Make sure to check out [examples](https://github.com/kdrtech/flutter_flexible_calendar/tree/master/example/lib)
 
-```dart
-const like = 'sample';
+
+### Installation
+
+Add the following line to `pubspec.yaml`:
+
+```yaml
+dependencies:
+  flutter_flexible_calendar: ^1.0.0
 ```
 
-## Additional information
+### Basic setup
 
-TODO: Tell users more about the package: where to find more information, how to 
-contribute to the package, how to file issues, what response they can expect 
-from the package authors, and more.
+*The complete example is available [here](https://github.com/kdrtech/flutter_flexible_calendar/tree/master/example/lib).*
+
+***&#11088;Standard Calendar***
+```dart
+ FlutterFlexibleCalendarView(
+    showHeader: true,
+    headerBgColor: Colors.white38,
+    calendarType: FlutterFlexibleCalendarType.standard,
+    showWeekendDay: false,
+    disabledPreDay: true,
+    colorBg: Colors.transparent,
+    maxLimitYear: 2,
+    minLimitYear: 2,
+    month: DateTime(_currentMonth.year, _currentMonth.month, 1),
+    didResult: (item, datetime) {
+      print("itme: ${item?.date}");
+      print("itme: ${item?.dateTime}");
+      print("itme: ${item?.nameOffWeek}");
+      print("date: ${datetime?.day}");
+      print("date: ${datetime?.month}");
+      print("date: ${datetime?.year}");
+    },
+    didDisableItemClick: () {},
+    didWeekendItemClick: () {},
+)
+```
+***&#11088;Horizontal Calendar***
+```dart
+ FlutterFlexibleCalendarView(
+    showHeader: true,
+    headerBgColor: Colors.white38,
+    calendarType: FlutterFlexibleCalendarType.horizontal,
+    showWeekendDay: false,
+    disabledPreDay: true,
+    colorBg: Colors.transparent,
+    maxLimitYear: 2,
+    minLimitYear: 2,
+    month: DateTime(_currentMonth.year, _currentMonth.month, 1),
+    didResult: (item, datetime) {
+      print("itme: ${item?.date}");
+      print("itme: ${item?.dateTime}");
+      print("itme: ${item?.nameOffWeek}");
+      print("date: ${datetime?.day}");
+      print("date: ${datetime?.month}");
+      print("date: ${datetime?.year}");
+    },
+    didDisableItemClick: () {},
+    didWeekendItemClick: () {},
+)
+```
+### Parameter
+```dart
+* showHeader : show calendar header. 
+* headerBgColor : set header background color.
+* calendarType : set calendar type (horizontal, standard)
+* showWeekendDay: show weekend day of previous of the month. 
+* disabledPreDay: disabled previous day.
+* colorBg: set calendar background color.
+* maxLimitYear: set max year allow move next.
+* minLimitYear: set min year allow move back.
+* month: set default month of calendar.
+* didResult: function to return date selected.
+* didDisableItemClick: function to return status when click on disabled item.
+* didWeekendItemClick: function to return status when click on weekend of day.
+* headerArrowLeft: allow change arrow left header icon.
+* headerArrowRight: allow change arrow right header icon.
+* other you can check our class.
+  ```
+### Events
+
+use `didResult` to return date user selected.
+
+```dart
+didResult: (item, datetime) {
+
+}
+```
+
+use `didDisableItemClick` to return status user click on disabled item date.
+
+```dart
+didDisableItemClick: () {
+
+}
+```
+
+use `didWeekendItemClick` to return status user click on item date weekend of previous of the month.
+
+```dart
+didWeekendItemClick: () {
+
+}
+```
+
+
+Hello everyone 👋
+
+If you want to support me, feel free to do so. 
+
+Thanks
+
+============================================
+
+សួស្ដី អ្នកទាំងអស់គ្នា👋 
+
+បើ​អ្នក​ចង់​គាំទ្រ​ខ្ញុំ សូម​ធ្វើ​ដោយ​សេរី , 
+
+សូមអរគុណ
+
+<a  href="https://www.buymeacoffee.com/kdrtech" target="_blank">
+<img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" height="41" />
+</a>
