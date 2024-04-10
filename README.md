@@ -11,10 +11,37 @@ and the Flutter guide for
 [developing packages and plugins](https://flutter.dev/developing-packages). 
 -->
 
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
+
+# flutter_flexible_calendar
+
+[![Pub Package](https://img.shields.io/pub/v/flutter_flexible_calendar.svg?style=flat-square)](https://pub.dev/packages/flutter_flexible_calendar)
+
+<a  href="https://www.buymeacoffee.com/kdrtech" target="_blank">
+<img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" height="41" />
+</a>
+
+Highly video, feature-packed flutter_flexible_calendar widget for Flutter.
+
+
+| ![Image](https://raw.githubusercontent.com/kdrtech/flutter_flexible_calendar/master/example/assets/standard.gif)
+| :------------: |
+| **Standard** |
+
+| ![Image](https://raw.githubusercontent.com/kdrtech/flutter_flexible_calendar/master/example/assets/horizontal.gif)
+| :------------: |
+| **Horizontal** |
 
 ## Features
+
+* Standar calendar user interface
+* Hotizontal calendar user interface 
+* Pull Up to reload new data.
+* Allow show refresh indicator
+* Change loading color
+* Change background loading color
+* Change refresh indicator Color
+
+* 
 
 TODO: List what your package can do. Maybe include images, gifs, or videos.
 
