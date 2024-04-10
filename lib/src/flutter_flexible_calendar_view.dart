@@ -7,39 +7,99 @@ import '../flutter_flexible_calendar.dart';
 import 'flutter_flexible_datetime_model.dart';
 import 'flutter_slivergriddelegate.dart';
 
+/// FlutterFlexibleCalendarView is the main class of the FlutterFlexibleCalendarView API.
+///
+/// It manages all params required for API using.
+/// you can check some required, some not.
+///
 class FlutterFlexibleCalendarView extends StatefulWidget {
+  /// The [month] current month.
   DateTime month;
+
+  /// The [currentMonth] current month prvate param.
   DateTime currentMonth = DateTime.now();
+
+  /// The [disabledPreDay] disabled previous day.
   bool disabledPreDay;
+
+  /// The [showWeekendDay] show weekend day of previous of the month.
   bool showWeekendDay;
+
+  /// The [showHeader] show calendar header.
   bool showHeader;
+
+  /// The [maxYear] set max year allow move next.
   int? maxYear;
+
+  /// The [minYear] set min year allow move back.
   int? minYear;
+
+  /// The [dayLists] set list date header.
+  ///
+  /// Ex: ["Mon", "Tue", "Wed", "Thur", "Fri", "Sat", "Sun"]
   List<String>? dayLists;
+
+  /// The [bgDayOfWeekend] set background item day of weekend.
   Color? bgDayOfWeekend;
+
+  /// The [currentDatePoint] set current status point for today.
   Color? currentDatePoint;
+
+  /// The [colorBg] set background color for calendar.
   Color? colorBg;
+
+  /// The [styleNumberDayOfWeekend] set number of weekend style.
   TextStyle? styleNumberDayOfWeekend;
+
+  /// The [styleDayOfWeekend]
   TextStyle? styleDayOfWeekend;
+
+  /// The [styleSelectedText]
   TextStyle? styleSelectedText;
+
+  /// The [styleSelectedSubText]
   TextStyle? styleSelectedSubText;
+
+  /// The [boxDecorationSelected]
   BoxDecoration? boxDecorationSelected;
-  //Header option
+
+  /// The [headerBgColor]
   Color? headerBgColor;
+
+  /// The [styleHeaderTextTitle]
   TextStyle? styleHeaderTextTitle;
+
+  /// The [styleHeaderSubTextTitle]
   TextStyle? styleHeaderSubTextTitle;
+
+  /// The [headerArrowLeft]
   Widget? headerArrowLeft;
+
+  /// The [headerArrowRight]
   Widget? headerArrowRight;
+
+  /// The [headerDateFormat]
   String? headerDateFormat;
-  //Active day of calendar
+
+  /// The [bgDay]
   Color? bgDay;
+
+  /// The [styleNumberDay]
   TextStyle? styleNumberDay;
+
+  /// The [styleDay]
   TextStyle? styleDay;
-  //callback
+
+  /// The [FlutterFlexibleDatetimeModel]
   Function(FlutterFlexibleDatetimeModel?, DateTime?)? didResult;
+
+  /// The [didDisableItemClick]
   Function()? didDisableItemClick;
+
+  /// The [didWeekendItemClick]
   Function()? didWeekendItemClick;
-  //Utils
+
+  /// The [calendarType]
   FlutterFlexibleCalendarType? calendarType;
 
   FlutterFlexibleCalendarView({
