@@ -7,13 +7,21 @@ class FlutterFlexibleCalendarExample extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: const Text(
+          "Flexible Calendar",
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ),
       body: SingleChildScrollView(
         child: Expanded(
           child: FlutterFlexibleCalendarView(
             showHeader: true,
             headerBgColor: Colors.white38,
-            calendarType: FlutterFlexibleCalendarType.standard,
+            calendarType: FlutterFlexibleCalendarType.horizontal,
             // currentDatePoint: Colors.blue,
             // styleHeaderTextTitle: TextStyle(
             //   color: Colors.red,
