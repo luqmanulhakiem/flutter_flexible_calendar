@@ -1,5 +1,7 @@
 // ignore_for_file: must_be_immutable
 
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -27,6 +29,9 @@ class FlutterFlexibleCalendarView extends StatefulWidget {
 
   /// The [showHeader] show calendar header.
   bool showHeader;
+
+  /// The [isMultiple] enabled multiple selected.
+  bool? isMultipleSelected;
 
   /// The [maxYear] set max year allow move next.
   int? maxYear;
@@ -123,6 +128,7 @@ class FlutterFlexibleCalendarView extends StatefulWidget {
     this.disabledPreDay = true,
     this.showWeekendDay = true,
     this.showHeader = true,
+    this.isMultipleSelected = false,
     this.bgDayOfWeekend,
     this.styleDayOfWeekend,
     this.styleNumberDayOfWeekend,
@@ -159,6 +165,7 @@ class CustomCalendarViewState extends State<FlutterFlexibleCalendarView> {
   List<FlutterFlexibleDatetimeModel> listDayPerMonthMerge = [];
   List<FlutterFlexibleDatetimeModel> listDay = [];
   List<FlutterFlexibleDatetimeModel> listDayS = [];
+  List<List<int>> listCurrentSelected = [];
   FlutterFlexibleDatetimeModel? itemSelected;
   bool isSelected = true;
   int daysInMonth = 0;
@@ -171,6 +178,7 @@ class CustomCalendarViewState extends State<FlutterFlexibleCalendarView> {
   int indexPage = 0;
   bool isFirstLoaded = false;
   bool isMoved = false;
+
   GlobalKey stickyKey = GlobalKey();
   @override
   void initState() {
@@ -192,8 +200,19 @@ class CustomCalendarViewState extends State<FlutterFlexibleCalendarView> {
     int parentIndex,
     int childIndex,
   ) {
+    print("=====$childIndex=====");
     widget.currentMonth = DateTime(widget.month.year, widget.month.month, day);
     currentSelected = DateTime(widget.month.year, widget.month.month, day);
+
+    if (widget.isMultipleSelected == false) {
+      if (listCurrentSelected.length >= 2) {
+        listCurrentSelected = [];
+      }
+      List<int> item = [];
+      item.add(parentIndex);
+      item.add(childIndex);
+      listCurrentSelected.add(item);
+    }
     listDayPerMonth.asMap().forEach(
       (key, value) {
         for (var element in value) {
@@ -204,6 +223,29 @@ class CustomCalendarViewState extends State<FlutterFlexibleCalendarView> {
         }
       },
     );
+    if (listCurrentSelected.length == 2) {
+      var first = listCurrentSelected[0][1] > listCurrentSelected[1][1]
+          ? listCurrentSelected[1][1]
+          : listCurrentSelected[0][1];
+      var second = listCurrentSelected[1][1] < listCurrentSelected[0][1]
+          ? listCurrentSelected[0][1]
+          : listCurrentSelected[1][1];
+      if (first > second) {
+        second = first;
+      }
+      listDayPerMonth.asMap().forEach(
+        (key, value) {
+          for (var element in value) {
+            element.isSelected = false;
+          }
+          if (key == parentIndex) {
+            for (var i = first; i <= second; i++) {
+              value[i].isSelected = true;
+            }
+          }
+        },
+      );
+    }
     listDayPerMonthMerge = listDayPerMonth.expand((x) => x).toList();
     setState(() {});
   }

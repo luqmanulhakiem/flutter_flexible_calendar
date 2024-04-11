@@ -6,6 +6,7 @@ class FlutterFlexibleDatetimeModel {
   bool isSelected;
   bool isPreDay;
   bool isCurrentDay;
+  bool isMultipleSelected;
   FlutterFlexibleDatetimeModel(
     this.date,
     this.nameOffWeek,
@@ -13,6 +14,7 @@ class FlutterFlexibleDatetimeModel {
     this.isWeekend,
     this.isSelected,
     this.isPreDay,
-    this.isCurrentDay,
-  );
+    this.isCurrentDay, {
+    this.isMultipleSelected = false,
+  });
 }
