@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_flexible_calendar/flutter_flexible_calendar.dart';
 
@@ -21,20 +22,27 @@ class FlutterFlexibleCalendarExample extends StatelessWidget {
           child: FlutterFlexibleCalendarView(
             showHeader: true,
             headerBgColor: Colors.white38,
-            calendarType: FlutterFlexibleCalendarType.horizontal,
+            calendarType: FlutterFlexibleCalendarType.standard,
             showWeekendDay: false,
             disabledPreDay: true,
             colorBg: Colors.transparent,
             maxLimitYear: 2,
             minLimitYear: 2,
+            isMultipleSelected: true,
             month: DateTime(_currentMonth.year, _currentMonth.month, 1),
             didResult: (item, datetime) {
-              print("itme: ${item?.date}");
-              print("itme: ${item?.dateTime}");
-              print("itme: ${item?.nameOffWeek}");
-              print("date: ${datetime?.day}");
-              print("date: ${datetime?.month}");
-              print("date: ${datetime?.year}");
+              if (kDebugMode) {
+                print(
+                    "date selected: ${item?.date}, ${item?.dateTime}, ${item?.nameOffWeek}");
+              }
+            },
+            didMultipleSelected: (firstDate, lastDate) {
+              if (kDebugMode) {
+                print(
+                    "firstDate: ${firstDate?.date}, ${firstDate?.dateTime}, ${firstDate?.nameOffWeek}");
+                print(
+                    "lastDate: ${lastDate?.date}, ${lastDate?.dateTime}, ${lastDate?.nameOffWeek}");
+              }
             },
             didDisableItemClick: () {},
             didWeekendItemClick: () {},

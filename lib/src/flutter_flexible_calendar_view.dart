@@ -96,6 +96,12 @@ class FlutterFlexibleCalendarView extends StatefulWidget {
   /// The [FlutterFlexibleDatetimeModel]
   Function(FlutterFlexibleDatetimeModel?, DateTime?)? didResult;
 
+  /// The [FlutterFlexibleDatetimeModel]
+  Function(
+    FlutterFlexibleDatetimeModel? firstDate,
+    FlutterFlexibleDatetimeModel? lastDate,
+  )? didMultipleSelected;
+
   /// The [didDisableItemClick]
   Function()? didDisableItemClick;
 
@@ -136,6 +142,7 @@ class FlutterFlexibleCalendarView extends StatefulWidget {
     this.didResult,
     this.didDisableItemClick,
     this.didWeekendItemClick,
+    this.didMultipleSelected,
   }) {
     dayLists = days ?? ["Mon", "Tue", "Wed", "Thur", "Fri", "Sat", "Sun"];
     maxYear =
@@ -203,7 +210,7 @@ class CustomCalendarViewState extends State<FlutterFlexibleCalendarView> {
     widget.currentMonth = DateTime(widget.month.year, widget.month.month, day);
     currentSelected = DateTime(widget.month.year, widget.month.month, day);
 
-    if (widget.isMultipleSelected == false) {
+    if (widget.isMultipleSelected == true) {
       if (listCurrentSelected.length >= 2) {
         listCurrentSelected = [];
       }
@@ -275,6 +282,13 @@ class CustomCalendarViewState extends State<FlutterFlexibleCalendarView> {
       );
     }
     listDayPerMonthMerge = listDayPerMonth.expand((x) => x).toList();
+    var items =
+        listDayPerMonthMerge.where((element) => element.isSelected).toList();
+
+    if (widget.isMultipleSelected == true && items.length > 1) {
+      print(items.first);
+      widget.didMultipleSelected?.call(items.first, items.last);
+    }
     setState(() {});
   }
 
