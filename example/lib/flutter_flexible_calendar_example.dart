@@ -22,13 +22,15 @@ class FlutterFlexibleCalendarExample extends StatelessWidget {
           child: FlutterFlexibleCalendarView(
             showHeader: true,
             headerBgColor: Colors.white38,
-            calendarType: FlutterFlexibleCalendarType.horizontal,
+            calendarType: FlutterFlexibleCalendarType.standard,
             showWeekendDay: false,
             disabledPreDay: true,
             colorBg: Colors.transparent,
             maxLimitYear: 2,
             minLimitYear: 2,
             isMultipleSelected: true,
+            setStartSelected: DateTime(2024, 4, 14),
+            setEndSelected: DateTime(2024, 4, 16),
             month: DateTime(_currentMonth.year, _currentMonth.month, 1),
             didResult: (item, datetime) {
               if (kDebugMode) {

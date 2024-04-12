@@ -31,6 +31,12 @@ class FlutterFlexibleCalendarView extends StatefulWidget {
   /// The [isMultiple] enabled multiple selected.
   bool? isMultipleSelected;
 
+  /// The [setStartSelected] enabled multiple selected.
+  DateTime? setStartSelected;
+
+  /// The [setEndSelected] enabled multiple selected.
+  DateTime? setEndSelected;
+
   /// The [maxYear] set max year allow move next.
   int? maxYear;
 
@@ -133,6 +139,8 @@ class FlutterFlexibleCalendarView extends StatefulWidget {
     this.showWeekendDay = true,
     this.showHeader = true,
     this.isMultipleSelected = false,
+    this.setStartSelected,
+    this.setEndSelected,
     this.bgDayOfWeekend,
     this.styleDayOfWeekend,
     this.styleNumberDayOfWeekend,
@@ -212,11 +220,23 @@ class CustomCalendarViewState extends State<FlutterFlexibleCalendarView> {
     if (widget.isMultipleSelected == true) {
       if (listCurrentSelected.length >= 2) {
         listCurrentSelected = [];
+        widget.setStartSelected = null;
+      }
+      if (listDatedSelected.length >= 2) {
+        listDatedSelected = [];
       }
       List<int> item = [];
       item.add(parentIndex);
       item.add(childIndex);
       listCurrentSelected.add(item);
+      listDatedSelected.add(currentSelected!);
+      if (listDatedSelected.length >= 2) {
+        if (listDatedSelected[0].month != listDatedSelected[1].month) {
+          listCurrentSelected = [];
+          widget.setStartSelected = null;
+          listDatedSelected = [];
+        }
+      }
     }
     listDayPerMonth.asMap().forEach(
       (key, value) {
@@ -431,21 +451,45 @@ class CustomCalendarViewState extends State<FlutterFlexibleCalendarView> {
               }
             }
           } else {
-            if (currentSelected != null &&
-                currentSelected?.year == element.dateTime?.year &&
-                currentSelected!.day >= element.date &&
-                currentSelected?.month == element.dateTime?.month) {
-              if (currentSelected!.day == element.date) {
-                element.isSelected = true;
+            if (widget.setStartSelected != null) {
+              if (widget.setStartSelected?.year == element.dateTime?.year &&
+                  widget.setStartSelected!.day >= element.date &&
+                  widget.setStartSelected?.month == element.dateTime?.month) {
+                element.isSelected = false;
+                if (widget.setStartSelected!.day == element.date) {
+                  element.isSelected = true;
+                  listCurrentSelected = [];
+                  List<int> item = [];
+                  item.add(key);
+                  item.add(childIndex);
+                  listCurrentSelected.add(item);
+                }
+                element.dateTime = widget.currentMonth;
+                // if (widget.setStartSelected?.day == DateTime.now().day) {
+                //   element.isCurrentDay = true;
+                // } else {
+                //   element.isCurrentDay = false;
+                // }
+                indexPage = key;
+                widget.didResult?.call(element, widget.currentMonth);
               }
-              element.dateTime = widget.currentMonth;
-              if (currentSelected?.day == DateTime.now().day) {
-                element.isCurrentDay = true;
-              } else {
-                element.isCurrentDay = false;
+            } else {
+              if (currentSelected != null &&
+                  currentSelected?.year == element.dateTime?.year &&
+                  currentSelected!.day >= element.date &&
+                  currentSelected?.month == element.dateTime?.month) {
+                if (currentSelected!.day == element.date) {
+                  element.isSelected = true;
+                }
+                element.dateTime = widget.currentMonth;
+                if (currentSelected?.day == DateTime.now().day) {
+                  element.isCurrentDay = true;
+                } else {
+                  element.isCurrentDay = false;
+                }
+                indexPage = key;
+                widget.didResult?.call(element, widget.currentMonth);
               }
-              indexPage = key;
-              widget.didResult?.call(element, widget.currentMonth);
             }
           }
           if (DateTime.now().year >= element.dateTime!.year &&
