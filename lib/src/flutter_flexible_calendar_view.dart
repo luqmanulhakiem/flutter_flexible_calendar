@@ -19,6 +19,9 @@ class FlutterFlexibleCalendarView extends StatefulWidget {
   /// The [currentMonth] current month prvate param.
   DateTime currentMonth = DateTime.now();
 
+  /// The [currentMonth] current month prvate param.
+  DateTime? currentSelected;
+
   /// The [disabledPreDay] disabled previous day.
   bool disabledPreDay;
 
@@ -124,6 +127,7 @@ class FlutterFlexibleCalendarView extends StatefulWidget {
     int? minLimitYear,
     List<String>? days,
     this.calendarType = FlutterFlexibleCalendarType.standard,
+    this.currentSelected,
     this.headerBgColor,
     this.styleHeaderTextTitle,
     this.styleHeaderSubTextTitle,
@@ -185,7 +189,7 @@ class CustomCalendarViewState extends State<FlutterFlexibleCalendarView> {
   int daysInMonth = 0;
   late DateTime firstDayOfMonth;
   late DateTime lastDayOfPreviousMonth;
-  DateTime? currentSelected;
+
   int weekdayOfFirstDay = 0;
   int daysInPreviousMonth = 0;
   int totalWeekdayOfFirstDay = 0;
@@ -215,7 +219,8 @@ class CustomCalendarViewState extends State<FlutterFlexibleCalendarView> {
     int childIndex,
   ) {
     widget.currentMonth = DateTime(widget.month.year, widget.month.month, day);
-    currentSelected = DateTime(widget.month.year, widget.month.month, day);
+    widget.currentSelected =
+        DateTime(widget.month.year, widget.month.month, day);
 
     if (widget.isMultipleSelected == true) {
       if (listCurrentSelected.length >= 2) {
@@ -229,7 +234,7 @@ class CustomCalendarViewState extends State<FlutterFlexibleCalendarView> {
       item.add(parentIndex);
       item.add(childIndex);
       listCurrentSelected.add(item);
-      listDatedSelected.add(currentSelected!);
+      listDatedSelected.add(widget.currentSelected!);
       if (listDatedSelected.length >= 2) {
         if (listDatedSelected[0].month != listDatedSelected[1].month) {
           listCurrentSelected = [];
@@ -397,7 +402,7 @@ class CustomCalendarViewState extends State<FlutterFlexibleCalendarView> {
           if (DateTime.now().year == element.dateTime?.year &&
               DateTime.now().day == element.date &&
               DateTime.now().month == element.dateTime?.month) {
-            if (currentSelected == null) {
+            if (widget.currentSelected == null) {
               element.isSelected = true;
               widget.didResult?.call(element, widget.currentMonth);
               List<int> item = [];
@@ -412,9 +417,9 @@ class CustomCalendarViewState extends State<FlutterFlexibleCalendarView> {
             indexPage = key;
           }
           if (widget.isMultipleSelected == true &&
-              currentSelected?.year == element.dateTime?.year &&
-              currentSelected!.day >= element.date &&
-              currentSelected?.month == element.dateTime?.month &&
+              widget.currentSelected?.year == element.dateTime?.year &&
+              widget.currentSelected!.day >= element.date &&
+              widget.currentSelected?.month == element.dateTime?.month &&
               listCurrentSelected.length > 1) {
             if (listCurrentSelected[0][0] == listCurrentSelected[1][0]) {
               var first = listCurrentSelected[0][1];
@@ -479,18 +484,18 @@ class CustomCalendarViewState extends State<FlutterFlexibleCalendarView> {
                 }
               }
             } else {
-              if (currentSelected != null &&
-                  currentSelected?.year == element.dateTime?.year &&
-                  currentSelected!.day >= element.date &&
-                  currentSelected?.month == element.dateTime?.month) {
-                if (currentSelected!.day == element.date) {
+              if (widget.currentSelected != null &&
+                  widget.currentSelected?.year == element.dateTime?.year &&
+                  widget.currentSelected!.day >= element.date &&
+                  widget.currentSelected?.month == element.dateTime?.month) {
+                if (widget.currentSelected!.day == element.date) {
                   element.isSelected = true;
                 }
                 element.dateTime = widget.currentMonth;
-                if (currentSelected?.day == DateTime.now().day) {
+                if (widget.currentSelected?.day == DateTime.now().day) {
                   element.isCurrentDay = true;
                 } else {
-                  element.isCurrentDay = false;
+                  //element.isCurrentDay = false;
                 }
                 indexPage = key;
                 widget.didResult?.call(element, widget.currentMonth);
