@@ -164,6 +164,7 @@ class CustomCalendarViewState extends State<FlutterFlexibleCalendarView> {
   List<FlutterFlexibleDatetimeModel> listDay = [];
   List<FlutterFlexibleDatetimeModel> listDayS = [];
   List<List<int>> listCurrentSelected = [];
+  List<DateTime> listDatedSelected = [];
   FlutterFlexibleDatetimeModel? itemSelected;
   bool isSelected = true;
   int daysInMonth = 0;
@@ -231,14 +232,43 @@ class CustomCalendarViewState extends State<FlutterFlexibleCalendarView> {
       if (first > second) {
         second = first;
       }
+
       listDayPerMonth.asMap().forEach(
         (key, value) {
           for (var element in value) {
             element.isSelected = false;
           }
-          if (key == parentIndex) {
-            for (var i = first; i <= second; i++) {
-              value[i].isSelected = true;
+          if (listCurrentSelected[0][0] == listCurrentSelected[1][0]) {
+            if (key == parentIndex) {
+              for (var i = first; i <= second; i++) {
+                value[i].isSelected = true;
+              }
+            }
+          } else {
+            for (var i = listCurrentSelected[0][0];
+                i <= listCurrentSelected[1][0];
+                i++) {
+              var first = listCurrentSelected[0][1];
+              if (key == i && listCurrentSelected[0][0] == key) {
+                for (var i = first; i < value.length; i++) {
+                  value[i].isSelected = true;
+                }
+              }
+
+              if (key == i &&
+                  listCurrentSelected[0][0] != key &&
+                  listCurrentSelected[1][0] != i) {
+                for (var i = 0; i < value.length; i++) {
+                  value[i].isSelected = true;
+                }
+              }
+
+              var second = listCurrentSelected[1][1];
+              if (listCurrentSelected[1][0] == key) {
+                for (var i = 0; i <= second; i++) {
+                  value[i].isSelected = true;
+                }
+              }
             }
           }
         },
@@ -329,13 +359,17 @@ class CustomCalendarViewState extends State<FlutterFlexibleCalendarView> {
     }
     if (isFirstLoaded) {
       listDayPerMonth.asMap().forEach((key, value) {
-        for (var element in value) {
+        value.asMap().forEach((childIndex, element) {
           if (DateTime.now().year == element.dateTime?.year &&
               DateTime.now().day == element.date &&
               DateTime.now().month == element.dateTime?.month) {
             if (currentSelected == null) {
               element.isSelected = true;
               widget.didResult?.call(element, widget.currentMonth);
+              List<int> item = [];
+              item.add(key);
+              item.add(childIndex);
+              listCurrentSelected.add(item);
             }
             widget.currentMonth =
                 DateTime(widget.month.year, widget.month.month, element.date);
@@ -369,7 +403,7 @@ class CustomCalendarViewState extends State<FlutterFlexibleCalendarView> {
             element.isPreDay = false;
             element.isCurrentDay = false;
           }
-        }
+        });
       });
       listDayPerMonthMerge = listDayPerMonth.expand((x) => x).toList();
     }
@@ -380,7 +414,6 @@ class CustomCalendarViewState extends State<FlutterFlexibleCalendarView> {
     if (!isMoved) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         initCurrentWeek(indexPage);
-        print("move");
         final RenderBox renderBoxRed =
             stickyKey.currentContext!.findRenderObject() as RenderBox;
         final height = renderBoxRed.size.height;

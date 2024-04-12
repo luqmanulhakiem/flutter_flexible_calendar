@@ -21,7 +21,7 @@ class FlutterFlexibleCalendarExample extends StatelessWidget {
           child: FlutterFlexibleCalendarView(
             showHeader: true,
             headerBgColor: Colors.white38,
-            calendarType: FlutterFlexibleCalendarType.standard,
+            calendarType: FlutterFlexibleCalendarType.horizontal,
             showWeekendDay: false,
             disabledPreDay: true,
             colorBg: Colors.transparent,
