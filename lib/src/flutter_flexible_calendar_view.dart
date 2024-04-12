@@ -206,7 +206,6 @@ class CustomCalendarViewState extends State<FlutterFlexibleCalendarView> {
     int parentIndex,
     int childIndex,
   ) {
-    print("=====$childIndex=====");
     widget.currentMonth = DateTime(widget.month.year, widget.month.month, day);
     currentSelected = DateTime(widget.month.year, widget.month.month, day);
 
@@ -391,21 +390,63 @@ class CustomCalendarViewState extends State<FlutterFlexibleCalendarView> {
             element.isCurrentDay = true;
             indexPage = key;
           }
-          if (currentSelected != null &&
+          if (widget.isMultipleSelected == true &&
               currentSelected?.year == element.dateTime?.year &&
               currentSelected!.day >= element.date &&
-              currentSelected?.month == element.dateTime?.month) {
-            if (currentSelected!.day == element.date) {
-              element.isSelected = true;
-            }
-            element.dateTime = widget.currentMonth;
-            if (currentSelected?.day == DateTime.now().day) {
-              element.isCurrentDay = true;
+              currentSelected?.month == element.dateTime?.month &&
+              listCurrentSelected.length > 1) {
+            if (listCurrentSelected[0][0] == listCurrentSelected[1][0]) {
+              var first = listCurrentSelected[0][1];
+              var second = listCurrentSelected[1][1];
+              if (key == listCurrentSelected[0][0]) {
+                for (var i = first; i <= second; i++) {
+                  value[i].isSelected = true;
+                }
+              }
             } else {
-              element.isCurrentDay = false;
+              for (var i = listCurrentSelected[0][0];
+                  i <= listCurrentSelected[1][0];
+                  i++) {
+                var first = listCurrentSelected[0][1];
+                if (key == i && listCurrentSelected[0][0] == key) {
+                  for (var i = first; i < value.length; i++) {
+                    value[i].isSelected = true;
+                  }
+                }
+
+                if (key == i &&
+                    listCurrentSelected[0][0] != key &&
+                    listCurrentSelected[1][0] != i) {
+                  for (var i = 0; i < value.length; i++) {
+                    value[i].isSelected = true;
+                  }
+                }
+
+                var second = listCurrentSelected[1][1];
+                if (listCurrentSelected[1][0] == key) {
+                  for (var i = 0; i <= second; i++) {
+                    value[i].isSelected = true;
+                  }
+                }
+              }
             }
-            indexPage = key;
-            widget.didResult?.call(element, widget.currentMonth);
+          } else {
+            if (currentSelected != null &&
+                currentSelected?.year == element.dateTime?.year &&
+                currentSelected!.day >= element.date &&
+                currentSelected?.month == element.dateTime?.month) {
+              if (currentSelected!.day == element.date) {
+                element.isSelected = true;
+              }
+              element.dateTime = widget.currentMonth;
+              if (currentSelected?.day == DateTime.now().day) {
+                element.isCurrentDay = true;
+              } else {
+                element.isCurrentDay = false;
+              }
+              indexPage = key;
+              widget.didResult?.call(element, widget.currentMonth);
+            }
           }
           if (DateTime.now().year >= element.dateTime!.year &&
               DateTime.now().day > element.date &&
