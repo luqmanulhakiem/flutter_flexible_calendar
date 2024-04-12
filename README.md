@@ -59,7 +59,7 @@ Add the following line to `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  flutter_flexible_calendar: ^1.0.0
+  flutter_flexible_calendar: ^1.0.1
 ```
 
 ### Basic setup
