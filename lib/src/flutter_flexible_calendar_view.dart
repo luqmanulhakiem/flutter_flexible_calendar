@@ -201,6 +201,9 @@ class CustomCalendarViewState extends State<FlutterFlexibleCalendarView> {
   @override
   void initState() {
     isFirstLoaded = true;
+    if (widget.isMultipleSelected == true) {
+      widget.currentSelected = null;
+    }
     initCalendar();
     super.initState();
   }

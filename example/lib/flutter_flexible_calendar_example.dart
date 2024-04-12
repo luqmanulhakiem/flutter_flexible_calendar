@@ -27,7 +27,7 @@ class FlutterFlexibleCalendarExample extends StatelessWidget {
           colorBg: Colors.transparent,
           maxLimitYear: 2,
           minLimitYear: 2,
-          isMultipleSelected: false,
+          isMultipleSelected: true,
           currentSelected: DateTime(2024, 4, 24),
           setStartSelected: DateTime(2024, 4, 13),
           setEndSelected: DateTime(2024, 4, 19),
