@@ -390,6 +390,7 @@ class CustomCalendarViewState extends State<FlutterFlexibleCalendarView> {
     if ((listDayOffWeek.length != (listDayPerMonth.length * 7))) {
       listDayPerMonth.add(listDay);
     }
+    List<int> item = [];
     if (isFirstLoaded) {
       listDayPerMonth.asMap().forEach((key, value) {
         value.asMap().forEach((childIndex, element) {
@@ -451,27 +452,31 @@ class CustomCalendarViewState extends State<FlutterFlexibleCalendarView> {
               }
             }
           } else {
-            if (widget.setStartSelected != null) {
-              if (widget.setStartSelected?.year == element.dateTime?.year &&
-                  widget.setStartSelected!.day >= element.date &&
-                  widget.setStartSelected?.month == element.dateTime?.month) {
+            if (widget.setStartSelected != null &&
+                widget.setEndSelected != null &&
+                widget.isMultipleSelected == true) {
+              if (DateTime.now().day != widget.setStartSelected!.day) {
                 element.isSelected = false;
-                if (widget.setStartSelected!.day == element.date) {
-                  element.isSelected = true;
-                  listCurrentSelected = [];
-                  List<int> item = [];
-                  item.add(key);
-                  item.add(childIndex);
-                  listCurrentSelected.add(item);
+              } else {
+                element.isSelected = true;
+              }
+              for (var i = widget.setStartSelected!.day;
+                  i <= widget.setEndSelected!.day;
+                  i++) {
+                if (widget.setStartSelected?.year == element.dateTime?.year &&
+                    i >= element.date &&
+                    widget.setStartSelected?.month == element.dateTime?.month) {
+                  if (i == element.date) {
+                    element.isSelected = true;
+                    item.add(key);
+                    item.add(childIndex);
+                    listCurrentSelected.add(item);
+                  }
+                  element.dateTime = widget.currentMonth;
+
+                  indexPage = key;
+                  widget.didResult?.call(element, widget.currentMonth);
                 }
-                element.dateTime = widget.currentMonth;
-                // if (widget.setStartSelected?.day == DateTime.now().day) {
-                //   element.isCurrentDay = true;
-                // } else {
-                //   element.isCurrentDay = false;
-                // }
-                indexPage = key;
-                widget.didResult?.call(element, widget.currentMonth);
               }
             } else {
               if (currentSelected != null &&
@@ -505,6 +510,13 @@ class CustomCalendarViewState extends State<FlutterFlexibleCalendarView> {
         });
       });
       listDayPerMonthMerge = listDayPerMonth.expand((x) => x).toList();
+      var items =
+          listDayPerMonthMerge.where((element) => element.isSelected).toList();
+
+      if (widget.isMultipleSelected == true && items.length > 1) {
+        print(items.first);
+        widget.didMultipleSelected?.call(items.first, items.last);
+      }
     }
   }
 

@@ -18,37 +18,35 @@ class FlutterFlexibleCalendarExample extends StatelessWidget {
         ),
       ),
       body: SingleChildScrollView(
-        child: Expanded(
-          child: FlutterFlexibleCalendarView(
-            showHeader: true,
-            headerBgColor: Colors.white38,
-            calendarType: FlutterFlexibleCalendarType.standard,
-            showWeekendDay: false,
-            disabledPreDay: true,
-            colorBg: Colors.transparent,
-            maxLimitYear: 2,
-            minLimitYear: 2,
-            isMultipleSelected: true,
-            setStartSelected: DateTime(2024, 4, 14),
-            setEndSelected: DateTime(2024, 4, 16),
-            month: DateTime(_currentMonth.year, _currentMonth.month, 1),
-            didResult: (item, datetime) {
-              if (kDebugMode) {
-                print(
-                    "date selected: ${item?.date}, ${item?.dateTime}, ${item?.nameOffWeek}");
-              }
-            },
-            didMultipleSelected: (firstDate, lastDate) {
-              if (kDebugMode) {
-                print(
-                    "firstDate: ${firstDate?.date}, ${firstDate?.dateTime}, ${firstDate?.nameOffWeek}");
-                print(
-                    "lastDate: ${lastDate?.date}, ${lastDate?.dateTime}, ${lastDate?.nameOffWeek}");
-              }
-            },
-            didDisableItemClick: () {},
-            didWeekendItemClick: () {},
-          ),
+        child: FlutterFlexibleCalendarView(
+          showHeader: true,
+          headerBgColor: Colors.white38,
+          calendarType: FlutterFlexibleCalendarType.standard,
+          showWeekendDay: false,
+          disabledPreDay: true,
+          colorBg: Colors.transparent,
+          maxLimitYear: 2,
+          minLimitYear: 2,
+          isMultipleSelected: true,
+          //setStartSelected: DateTime(2024, 4, 11),
+          //setEndSelected: DateTime(2024, 4, 19),
+          month: DateTime(_currentMonth.year, _currentMonth.month, 1),
+          didResult: (item, datetime) {
+            if (kDebugMode) {
+              print(
+                  "date selected: ${item?.date}, ${item?.dateTime}, ${item?.nameOffWeek}");
+            }
+          },
+          didMultipleSelected: (firstDate, lastDate) {
+            if (kDebugMode) {
+              print(
+                  "firstDate: ${firstDate?.date}, ${firstDate?.dateTime}, ${firstDate?.nameOffWeek}");
+              print(
+                  "lastDate: ${lastDate?.date}, ${lastDate?.dateTime}, ${lastDate?.nameOffWeek}");
+            }
+          },
+          didDisableItemClick: () {},
+          didWeekendItemClick: () {},
         ),
       ),
     );
