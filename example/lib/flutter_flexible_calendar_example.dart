@@ -28,8 +28,8 @@ class FlutterFlexibleCalendarExample extends StatelessWidget {
           maxLimitYear: 2,
           minLimitYear: 2,
           isMultipleSelected: true,
-          //setStartSelected: DateTime(2024, 4, 11),
-          //setEndSelected: DateTime(2024, 4, 19),
+          setStartSelected: DateTime(2024, 4, 11),
+          setEndSelected: DateTime(2024, 4, 19),
           month: DateTime(_currentMonth.year, _currentMonth.month, 1),
           didResult: (item, datetime) {
             if (kDebugMode) {
