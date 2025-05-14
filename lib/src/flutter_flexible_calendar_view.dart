@@ -120,12 +120,16 @@ class FlutterFlexibleCalendarView extends StatefulWidget {
   /// The [calendarType]
   FlutterFlexibleCalendarType? calendarType;
 
+  /// The [locale]
+  String? locale;
+
   FlutterFlexibleCalendarView({
     super.key,
     required this.month,
     int? maxLimitYear,
     int? minLimitYear,
     List<String>? days,
+    this.locale = 'en',
     this.calendarType = FlutterFlexibleCalendarType.standard,
     this.currentSelected,
     this.headerBgColor,
@@ -588,8 +592,10 @@ class CustomCalendarViewState extends State<FlutterFlexibleCalendarView> {
                 Column(
                   children: [
                     Text(
-                      DateFormat(widget.headerDateFormat ?? 'MMM')
-                          .format(widget.currentMonth),
+                      DateFormat(
+                        widget.headerDateFormat ?? 'MMM',
+                        widget.locale,
+                      ).format(widget.currentMonth),
                       style: widget.styleHeaderTextTitle ??
                           TextStyle(
                             color: Colors.black87,
