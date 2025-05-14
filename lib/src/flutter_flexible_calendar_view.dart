@@ -121,7 +121,7 @@ class FlutterFlexibleCalendarView extends StatefulWidget {
   FlutterFlexibleCalendarType? calendarType;
 
   /// The [locale]
-  String? locale;
+  String locale;
 
   FlutterFlexibleCalendarView({
     super.key,
@@ -160,7 +160,7 @@ class FlutterFlexibleCalendarView extends StatefulWidget {
     this.didWeekendItemClick,
     this.didMultipleSelected,
   }) {
-    dayLists = days ?? ["Mon", "Tue", "Wed", "Thur", "Fri", "Sat", "Sun"];
+    dayLists = days ?? getLocalizedDayList(days, locale);
     maxYear =
         maxLimitYear != null ? month.year + maxLimitYear : month.year + 10;
     minYear = minLimitYear != null ? month.year - minLimitYear : month.year - 2;
